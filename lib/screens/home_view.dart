@@ -10,7 +10,8 @@ class HomeView extends StatefulWidget {
   State<HomeView> createState() => _HomeViewState();
 }
 
-class _HomeViewState extends State<HomeView> with SingleTickerProviderStateMixin {
+class _HomeViewState extends State<HomeView>
+    with SingleTickerProviderStateMixin {
   late TabController tabController;
   int currentIndex = 0;
 
@@ -30,13 +31,13 @@ class _HomeViewState extends State<HomeView> with SingleTickerProviderStateMixin
 
   @override
   Widget build(BuildContext context) {
-    
-
     return Scaffold(
       extendBody: true,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          showAlertDialog(context);
+        },
         child: Icon(Icons.add),
       ),
       appBar: AppBar(
@@ -102,7 +103,7 @@ class _HomeViewState extends State<HomeView> with SingleTickerProviderStateMixin
   Widget buildPriorityTab() {
     return Container(
       child: Center(
-        child: Text('Öncelikli'),
+        child: Text('Öncelikli Görevler'),
       ),
     );
   }
@@ -121,5 +122,50 @@ class _HomeViewState extends State<HomeView> with SingleTickerProviderStateMixin
         child: Text('Geçmiş'),
       ),
     );
+  }
+
+  showAlertDialog(BuildContext context) {
+    TextEditingController titleController = TextEditingController();
+    TextEditingController descController = TextEditingController();
+    Widget addButton = ElevatedButton(
+      onPressed: () {},
+      child: Text('Add Todo'),
+    );
+    Widget cancelButton = TextButton(
+      onPressed: () {
+        Navigator.pop(context);
+      },
+      child: Text('Cancel'),
+    );
+    AlertDialog alert = AlertDialog(
+      title: Text('Add'),
+      content: Form(
+        child: SizedBox(
+          height: 200,
+          child: Column(
+            children: [
+              TextFormField(
+                controller: titleController,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder()
+                ),
+              ),
+              TextFormField(
+                controller: descController,
+              )
+            ],
+          ),
+        ),
+      ),
+      actions: [
+        addButton,
+        cancelButton,
+      ],
+    );
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return alert;
+        });
   }
 }
