@@ -102,7 +102,7 @@ class _HomeViewState extends State<HomeView> with SingleTickerProviderStateMixin
   Widget buildPriorityTab() {
     return Container(
       child: Center(
-        child: Text('Öncelikli Görevler'),
+        child: Text('Öncelikli'),
       ),
     );
   }
