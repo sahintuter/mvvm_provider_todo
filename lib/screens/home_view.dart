@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:mvvm_provider_todo/models/home_view_model.dart';
 import 'package:mvvm_provider_todo/models/todo.dart';
+import 'package:mvvm_provider_todo/screens/build_priority_tab.dart';
 import 'package:provider/provider.dart';
+
+import 'build_history_tab.dart';
+import 'build_task_tab.dart';
 
 class HomeView extends StatefulWidget {
   HomeView({Key? key}) : super(key: key);
@@ -77,9 +81,9 @@ final errorText= 'Lütfen Başık Girin';
         index: currentIndex,
         children: [
           buildTodoListTab(),
-          buildPriorityTab(),
-          buildTasksTab(),
-          buildHistoryTab(),
+          PriorityTab(),
+          TaskTab(),
+          HistoryTab(),
         ],
       ),
     );
@@ -101,31 +105,6 @@ final errorText= 'Lütfen Başık Girin';
       },
     );
   }
-
-  Widget buildPriorityTab() {
-    return Container(
-      child: Center(
-        child: Text('Öncelikli Görevler'),
-      ),
-    );
-  }
-
-  Widget buildTasksTab() {
-    return Container(
-      child: Center(
-        child: Text('Görevler'),
-      ),
-    );
-  }
-
-  Widget buildHistoryTab() {
-    return Container(
-      child: Center(
-        child: Text('Geçmiş'),
-      ),
-    );
-  }
-
   showAlertDialog(BuildContext context) {
     TextEditingController titleController = TextEditingController();
     TextEditingController descController = TextEditingController();
