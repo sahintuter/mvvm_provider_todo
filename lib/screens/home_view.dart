@@ -17,6 +17,8 @@ class _HomeViewState extends State<HomeView>
 
   final title = Text('MVVM TODO App');
 
+final errorText= 'Lütfen Başık Girin';
+
   @override
   void initState() {
     super.initState();
@@ -127,8 +129,19 @@ class _HomeViewState extends State<HomeView>
   showAlertDialog(BuildContext context) {
     TextEditingController titleController = TextEditingController();
     TextEditingController descController = TextEditingController();
+
+    final formKey = GlobalKey<FormState>();
+
     Widget addButton = ElevatedButton(
-      onPressed: () {},
+      onPressed: () {
+        Todo todo = Todo(titleController.text, descController.text, false);
+        if (formKey.currentState!.validate()) {
+          Provider.of<HomeViewModel>(context, listen: false).addTodo(todo);
+        }
+        titleController.text = '';
+        descController.text = '';
+        
+      },
       child: Text('Add Todo'),
     );
     Widget cancelButton = TextButton(
@@ -140,19 +153,34 @@ class _HomeViewState extends State<HomeView>
     AlertDialog alert = AlertDialog(
       title: Text('Add'),
       content: Form(
+        key: formKey,
         child: SizedBox(
           height: 200,
           child: Column(
             children: [
               TextFormField(
                 controller: titleController,
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return errorText;
+                  }
+                 
+                },
                 decoration: InputDecoration(
-                  border: OutlineInputBorder()
+                  border: OutlineInputBorder(),
+                  labelText: 'Title',
                 ),
+              ),
+              SizedBox(
+                height: 20,
               ),
               TextFormField(
                 controller: descController,
-              )
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Description',
+                ),
+              ),
             ],
           ),
         ),
